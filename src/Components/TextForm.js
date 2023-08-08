@@ -36,30 +36,48 @@ export default function TextForm(props) {
     alert(`${noSpaceCharacters} characters present without any spaces!`,) ;
   }
 
+  const clearText=()=>{
+    setText("");
+  }
+  const copyText=()=>{
+    let text=document.getElementById("myBox");
+    text.select();
+    navigator.clipboard.writeText(text.value);
+  }
+
+  const removeExtraSpaces=()=>{
+    let textt = text.replace(/\s+/g, ' ').trim();
+    setText(textt);
+  }
+
   const [text, setText]= useState("");
   // setText("Write text here");
   return (
     <>
-    <div className="container my-3">
+    <div className={`container my-3 text-${props.mode==='light'?'dark':'light'}`}>
         <h1>{props.heading}</h1>
-        <div className="mb-3">
+        <div className="mb-3" >
           {/* <label for="myBox" className="form-label">Example textarea</label> */}
-          <textarea className="form-control" id="myBox" value={text} onChange={handleOnChange} rows="10" placeholder={props.placeholder}></textarea>
+          <textarea className="form-control" id="myBox" value={text} onChange={handleOnChange} rows="10" placeholder={props.placeholder} style={{backgroundColor:`${props.mode==='light'?'white':'#042743'}`,color:`${props.mode==='light'?'black':'white'}`}}></textarea>
         </div>
         <button className="btn btn-primary" onClick={handleOnClick} >Convert to UpperCase</button>
         <button className="btn btn-primary" onClick={handleLoClick} >Convert to LowerCase</button>
         <button className="btn btn-primary" onClick={nospace} >Characters without Spaces</button>
+        <button className="btn btn-primary" onClick={copyText} >Copy Text</button>
+        <button className="btn btn-primary" onClick={clearText} >Clear Text</button>
+        <button className="btn btn-primary" onClick={removeExtraSpaces} >Remove Extra Spaces</button>
+
 
     </div>
-    <div className='container my-4'>
-    <h2>{props.summary}</h2>
-    The text has <b>{wordCheck()}</b> words and <b>{text.length}</b> characters
-    <br/>
-    Estimated time to read: <b>{text.split(" ").length*0.08}</b> minutes
-    <br></br>
-    {/* <br></br> */}
-    <h2>Preview</h2>
-    <p>{text}</p>
+    <div className={`container my-4 text-${props.mode==='light'?'dark':'light'}`}>
+      <h2>{props.summary}</h2>
+      The text has <b>{wordCheck()}</b> words and <b>{text.length}</b> characters
+      <br/>
+      Estimated time to read: <b>{text.split(" ").length*0.08}</b> minutes
+      <br></br>
+      {/* <br></br> */}
+      <h2>Preview</h2>
+      <p>{text.length>0?text:"Enter text in the above box to preview it here..!!"}</p>
     </div>
     </>
   )
