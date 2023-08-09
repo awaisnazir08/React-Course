@@ -1,6 +1,7 @@
 import React,{useState} from 'react'
 import propTypes from 'prop-types'
 import './TextForm.css'
+
 // import PropTypes from 'prop-types'
 export default function TextForm(props) {
 
@@ -13,12 +14,16 @@ export default function TextForm(props) {
     console.log("On click "+ text);
     let textt=text.toUpperCase();
     setText(textt);
+    props.showAlert("Converted to Upper Case",'success');
+
   }
 
   const handleLoClick=()=>{
     // console.log("On click "+ text);
     let textt=text.toLowerCase();
     setText(textt);
+    props.showAlert("Converted to Lower Case",'success');
+
   }
 
   const wordCheck=()=>{
@@ -38,16 +43,21 @@ export default function TextForm(props) {
 
   const clearText=()=>{
     setText("");
+    props.showAlert("Cleared text",'success');
+
   }
   const copyText=()=>{
     let text=document.getElementById("myBox");
     text.select();
     navigator.clipboard.writeText(text.value);
+    props.showAlert("Copied text to ClipBoard",'success');
+
   }
 
   const removeExtraSpaces=()=>{
     let textt = text.replace(/\s+/g, ' ').trim();
     setText(textt);
+    props.showAlert("Extra Spaces removed",'success');
   }
 
   const [text, setText]= useState("");
@@ -73,7 +83,7 @@ export default function TextForm(props) {
       <h2>{props.summary}</h2>
       The text has <b>{wordCheck()}</b> words and <b>{text.length}</b> characters
       <br/>
-      Estimated time to read: <b>{text.split(" ").length*0.08}</b> minutes
+      Estimated time to read: <b>{text.split(" ").length*0.008}</b> minutes
       <br></br>
       {/* <br></br> */}
       <h2>Preview</h2>
