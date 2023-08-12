@@ -27,12 +27,8 @@ export default function TextForm(props) {
   }
 
   const wordCheck=()=>{
-    let lastchar=text.charAt(text.length-1)
-    if(lastchar===" ")
-    {
-      return text.split(" ").length-1;
-    }
-    return text.split(" ").length;
+    const words = text.trim().split(/\s+/); // Split by one or more spaces
+    return words.length;
   }
 
   const nospace=()=>{
@@ -60,6 +56,10 @@ export default function TextForm(props) {
     props.showAlert("Extra Spaces removed",'success');
   }
 
+  const timeToRead=()=>{
+    const words = text.trim().split(/\s+/); // Split by one or more spaces
+    return words.length;
+  }
   const [text, setText]= useState("");
   // setText("Write text here");
   return (
@@ -68,7 +68,7 @@ export default function TextForm(props) {
         <h1>{props.heading}</h1>
         <div className="mb-3" >
           {/* <label for="myBox" className="form-label">Example textarea</label> */}
-          <textarea className="form-control" id="myBox" value={text} onChange={handleOnChange} rows="10" placeholder={props.placeholder} style={{backgroundColor:`${props.mode==='light'?'white':'#042743'}`,color:`${props.mode==='light'?'black':'white'}`}}></textarea>
+          <textarea className="form-control" id="myBox" value={text} onChange={handleOnChange} rows="10" placeholder={props.placeholder} style={{backgroundColor:`${props.mode==='light'?'white':props.formColor}`,color:`${props.mode==='light'?'black':'white'}`}}></textarea>
         </div>
         <button className="btn btn-primary" onClick={handleOnClick} >Convert to UpperCase</button>
         <button className="btn btn-primary" onClick={handleLoClick} >Convert to LowerCase</button>
@@ -81,9 +81,9 @@ export default function TextForm(props) {
     </div>
     <div className={`container my-4 text-${props.mode==='light'?'dark':'light'}`}>
       <h2>{props.summary}</h2>
-      The text has <b>{wordCheck()}</b> words and <b>{text.length}</b> characters
+      The text has <b>{text.length>0?wordCheck(): 0}</b> words and <b>{text.length}</b> characters
       <br/>
-      Estimated time to read: <b>{text.split(" ").length*0.008}</b> minutes
+      Estimated time to read: <b>{text.length>0?timeToRead()*0.008:0}</b> minutes
       <br></br>
       {/* <br></br> */}
       <h2>Preview</h2>

@@ -1,0 +1,21 @@
+
+button{
+    margin:none;
+    padding:none;
+} 
+#lastbutton{
+    margin-right:50px;
+}
+
+#button1{
+    background-color: #9966ff;
+}
+#button2{
+    background-color: #00bfff;
+}
+#button3{
+    background-color: #003300;
+}
+#lastbutton{
+    background-color: grey;
+}

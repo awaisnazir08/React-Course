@@ -1,7 +1,12 @@
-import React from 'react'
+import React, {useState} from 'react'
 import propTypes from 'prop-types'
+import './Navbar.css'
 
 export default function Navbar(props) {
+
+  const handleMode=(modee)=>{
+    props.settingMode(modee)
+  }
   return (
     <nav className={`navbar navbar-expand-lg navbar-${props.mode} bg-${props.mode}`}>
   <div className="container-fluid">
@@ -18,10 +23,12 @@ export default function Navbar(props) {
           <a className="nav-link" href="/">{props.aboutText}</a>
         </li>
       </ul>
-      {/* <form className="d-flex" role="search">
-        <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
-        <button className="btn btn-primary" type="submit">Search</button>
-      </form> */}
+      <div className="btn-group">
+        <a id="button1" className="btn btn-primary active" aria-current="page" onClick={()=>handleMode('purple')} >Purple</a>
+        <a id="button2" className="btn btn-primary" onClick={()=>handleMode('blue')}>Blue</a>
+        <a id="button3" className="btn btn-primary" onClick={()=>handleMode('green')}>Green</a>
+        <a id="lastbutton" className="btn btn-primary" onClick={()=>handleMode('grey')}>Grey</a>
+      </div>
       <div className="form-check form-switch">
   <input className="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" onClick={props.toggleMode}/>
   <label className={`form-check-label text-${props.mode==='light'?'dark':'light'}`} htmlFor="flexSwitchCheckDefault">Dark Mode</label>
