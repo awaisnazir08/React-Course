@@ -1,9 +1,16 @@
 import './App.css';
 import React, { useState } from 'react';
-// import About from './Components/About';
+import About from './Components/About';
 import Navbar from './Components/Navbar'
 import TextForm from './Components/TextForm';
-import Alert from './Components/Alert'
+import Alert from './Components/Alert';
+import {
+  BrowserRouter,
+  Switch,
+  Route,
+  Link,
+  Routes
+} from "react-router-dom";
 
 function App() {
   const [alert,setAlert]=useState(null);
@@ -70,19 +77,29 @@ function App() {
       document.body.style.backgroundColor="#042743";
       showAlert("The dark mode has been enabled","success");
       setFormColor('#042743');
+      document.title="TextUtils - Dark Mode"
     }
     else{
       setMode('light');
       document.body.style.backgroundColor="white";
       showAlert("The light mode has been enabled","success")
+      document.title="TextUtils - Light Mode"
     }
   }
   return (
     <>
-    <Navbar title="Text Utils" aboutText="About TextUtils" mode={mode} toggleMode={toggleMode} settingMode={settingMode}/>
-    <Alert alert={alert}/>
-    <TextForm heading="Enter the text to Analyze" placeholder="Enter here" mode={mode} showAlert={showAlert} formColor={formColor}/>
-    {/* <About/> */}
+    <BrowserRouter>
+      <Navbar title="Text Utils" aboutText="About" mode={mode} toggleMode={toggleMode} settingMode={settingMode}/>
+      <Alert alert={alert}/>
+        <Switch>
+              <Route exact path="/about">
+                <About/>
+              </Route>
+              <Route exact path="/">
+                <TextForm heading="Enter the text to Analyze" placeholder="Enter here" mode={mode} showAlert={showAlert} formColor={formColor}/>
+              </Route>
+        </Switch>
+    </BrowserRouter>
     </>
   );
 }
