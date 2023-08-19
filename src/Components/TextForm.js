@@ -46,6 +46,7 @@ export default function TextForm(props) {
     let text=document.getElementById("myBox");
     text.select();
     navigator.clipboard.writeText(text.value);
+    document.getSelection().removeAllRanges();
     props.showAlert("Copied text to ClipBoard",'success');
 
   }
@@ -70,20 +71,20 @@ export default function TextForm(props) {
           {/* <label for="myBox" className="form-label">Example textarea</label> */}
           <textarea className="form-control" id="myBox" value={text} onChange={handleOnChange} rows="10" placeholder={props.placeholder} style={{backgroundColor:`${props.mode==='light'?'white':props.formColor}`,color:`${props.mode==='light'?'black':'white'}`}}></textarea>
         </div>
-        <button className="btn btn-primary" onClick={handleOnClick} >Convert to UpperCase</button>
-        <button className="btn btn-primary" onClick={handleLoClick} >Convert to LowerCase</button>
-        <button className="btn btn-primary" onClick={nospace} >Characters without Spaces</button>
-        <button className="btn btn-primary" onClick={copyText} >Copy Text</button>
-        <button className="btn btn-primary" onClick={clearText} >Clear Text</button>
-        <button className="btn btn-primary" onClick={removeExtraSpaces} >Remove Extra Spaces</button>
+        <button disabled={text.length===0} className="btn btn-primary my-1" onClick={handleOnClick} >Convert to UpperCase</button>
+        <button disabled={text.length===0} className="btn btn-primary my-1" onClick={handleLoClick} >Convert to LowerCase</button>
+        <button disabled={text.length===0} className="btn btn-primary my-1" onClick={nospace} >Characters without Spaces</button>
+        <button disabled={text.length===0} className="btn btn-primary my-1" onClick={copyText} >Copy Text</button>
+        <button disabled={text.length===0} className="btn btn-primary my-1" onClick={clearText} >Clear Text</button>
+        <button disabled={text.length===0} className="btn btn-primary my-1" onClick={removeExtraSpaces} >Remove Extra Spaces</button>
 
 
     </div>
     <div className={`container my-4 text-${props.mode==='light'?'dark':'light'}`}>
       <h2>{props.summary}</h2>
-      The text has <b>{text.length>0?wordCheck(): 0}</b> words and <b>{text.length}</b> characters
+      The text has <b>{text.split(" ").filter((element)=>{return element.length!==0}).length}</b> words and <b>{text.length}</b> characters
       <br/>
-      Estimated time to read: <b>{text.length>0?timeToRead()*0.008:0}</b> minutes
+      Estimated time to read: <b>{text.split(" ").filter((element)=>{return element.length!==0}).length*0.008}</b> minutes
       <br></br>
       {/* <br></br> */}
       <h2>Preview</h2>
